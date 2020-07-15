@@ -9,11 +9,12 @@ export function login(data) {
 }
 
 export function getInfo(token) {
-  return request({
-    url: '/user/info',
-    method: 'get',
+  var aa = request({
+    url: '/login/info',
+    method: 'post',
     params: { token }
   })
+  return aa
 }
 
 export function logout() {

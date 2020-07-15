@@ -36,11 +36,11 @@ export default {
   },
   computed: {
     routes() {
-      // return this.$store.getters.permission_routes
-      return [
-        {path:'/dashboard', children:[], component: null, meta: { title: 'Dashboard', icon: 'dashboard', affix: true }},
-        {path:'/documentation/index', children:[], component: null, meta: { title: 'Documentation', icon: 'documentation', affix: true }}
-      ]
+      return this.$store.getters.permission_routes
+      // return [
+      //   {path:'/dashboard', children:[], component: null, meta: { title: 'Dashboard', icon: 'dashboard', affix: true }},
+      //   {path:'/documentation/index', children:[], component: null, meta: { title: 'Documentation', icon: 'documentation', affix: true }}
+      // ]
     }
   },
   watch: {

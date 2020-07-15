@@ -21,7 +21,8 @@ function handleResults (response) {
         })
     }
 
-    let content = result.responseBody
+    // let content = result.responseBody
+    let content = result
     if (content.code != '200') {
         Message({
             message: content.message || 'Error',
@@ -200,3 +201,81 @@ export default {
         )
     }
 }
+
+
+export function httpPost(url, data, response, exception) {
+
+      // return new Promise((resolve, reject) => {
+  //   http.post('/login/web', data, response => {
+  //     resolve(response)
+  //   })
+  // }).catch(error => {
+  //   reject(error)
+  // })
+
+    return new Promise((resolve, reject) => {
+        
+        axios({
+            method: 'post',
+            url: handleUrl(url),
+            data: handleParams(data),
+            timeout: TIME_OUT_MS,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8'
+            }
+        }).then(
+            (result) => {
+                resolve(response(handleResults(result)))
+            }
+        ).catch(
+            (error) => {
+                if (exception) {
+                    exception(error)
+                } else {
+                    console.log(error)
+                }
+            }
+        )
+
+    }).catch(error => {
+        reject(error)
+    })
+   
+}
+
+export function httpGet(url, data, response, exception) {
+
+  return new Promise((resolve, reject) => {
+      
+    axios({
+        method: 'get',
+        url: handleUrl(url),
+        timeout: TIME_OUT_MS,
+        headers: {
+            'Content-Type': 'application/json; charset=UTF-8'
+        }
+    }).then(
+        (result) => {
+            resolve(response(handleResults(result)))
+        }
+    ).catch(
+        (error) => {
+            if (exception) {
+                exception(error)
+            } else {
+                console.log(error)
+            }
+        }
+    )
+
+  }).catch(error => {
+      reject(error)
+  })
+ 
+}
+
+
+
+
+
+

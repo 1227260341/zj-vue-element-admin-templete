@@ -29,40 +29,41 @@ export default {
   data() {
 
     return {
-      permission_routes: [
-        {
-          path: '/',
-          name: 'dashboard',
-          children: [
-            {
-              path: 'dashboard',
-              name: 'Dashboard',
-              meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
-            }
-          ]
-        },
-        {
-          path: '/documentation',
-          children: [
-            {
-              path: 'index',
-              name: 'Documentation',
-              meta: { title: 'Documentation', icon: 'documentation', affix: true }
-            }
-          ]
-        },
+      // permission_routes: [
+      //   {
+      //     path: '/',
+      //     name: 'dashboard',
+      //     children: [
+      //       {
+      //         path: 'dashboard',
+      //         name: 'Dashboard',
+      //         meta: { title: 'Dashboard', icon: 'dashboard', affix: true }
+      //       }
+      //     ]
+      //   },
+      //   {
+      //     path: '/documentation',
+      //     children: [
+      //       {
+      //         path: 'index',
+      //         name: 'Documentation',
+      //         meta: { title: 'Documentation', icon: 'documentation', affix: true }
+      //       }
+      //     ]
+      //   },
 
-      ]
+      // ]
     }
   },
   computed: {
     ...mapGetters([
-      // 'permission_routes',
+      'permission_routes',
       'sidebar'
     ]),
     activeMenu() {
       const route = this.$route
       const { meta, path } = route
+      console.log('------activeMenu---------')
       console.log(this.permission_routes)
       console.log(route)
       // console.log(meta.activeMenu)
@@ -70,7 +71,6 @@ export default {
       if (meta.activeMenu) {
         return meta.activeMenu
       }
-      console.log('---------------')
       return path
     },
     showLogo() {

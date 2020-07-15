@@ -76,6 +76,8 @@
 <script>
 import { validUsername } from '@/utils/validate'
 import SocialSign from './components/SocialSignin'
+import { getToken, setToken, removeToken } from '@/utils/auth'
+import { login } from '@/api/login'
 
 export default {
   name: 'Login',
@@ -164,20 +166,46 @@ export default {
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
-          this.http.post(this.loginApi.userLogin.login, {
-              loginName: 'test1',
-              loginPwd: 'lz123456'
-          }, res => {
-              console.log(res)
-              if (res != null) {
-                  // 返回正确的处理
-                  this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
-                  this.loading = false
-              } else {
-                // 返回错误的处理 
+
+          var tempData = {
+            loginName: 'test1',
+            loginPwd: 'lz123456'
+          }
+        
+        login(tempData).then((res) => {
+
+            console.log(res)
+            if (res != null) {
+                setToken(res)
+                console.log("登录成功， 成功写入cookie = " + getToken())
+                // 返回正确的处理
+                this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
                 this.loading = false
-              }
+                
+            } else {
+              // 返回错误的处理 
+              this.loading = false
+            }
           })
+
+
+          // this.http.post(this.loginApi.userLogin.login, {
+          //     loginName: 'test1',
+          //     loginPwd: 'lz123456'
+          // }, res => {
+          //     console.log(res)
+          //     if (res != null) {
+          //         setToken(res)
+          //         console.log("登录成功， 成功写入cookie = " + getToken())
+          //         // 返回正确的处理
+          //         this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
+          //         this.loading = false
+                 
+          //     } else {
+          //       // 返回错误的处理 
+          //       this.loading = false
+          //     }
+          // })
           // this.$store.dispatch('user/login', this.loginForm)
           //   .then(() => {
           //     this.$router.push({ path: this.redirect || '/', query: this.otherQuery })
