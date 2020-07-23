@@ -85,22 +85,24 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (!validUsername(value)) {
-        callback(new Error('Please enter the correct user name'))
+        // callback(new Error('Please enter the correct user name'))
+        callback()
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('The password can not be less than 6 digits'))
+        // callback(new Error('The password can not be less than 6 digits'))
+        callback()
       } else {
         callback()
       }
     }
     return {
       loginForm: {
-        username: 'admin',
-        password: '111111'
+        username: '沃德天',
+        password: '123456'
       },
       loginRules: {
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
@@ -163,20 +165,22 @@ export default {
       })
     },
     handleLogin() {
+      var pageThis = this;
       this.$refs.loginForm.validate(valid => {
         if (valid) {
           this.loading = true
 
-          var tempData = {
-            loginName: 'test1',
-            loginPwd: 'lz123456'
-          }
-        
-        login(tempData).then((res) => {
+          // var tempData = {
+          //   loginName: '沃德天',
+          //   loginPwd: '123456'
+          // }
+        console.log(pageThis.loginForm)
+        debugger
+        login(pageThis.loginForm).then((res) => {
 
             console.log(res)
             if (res != null) {
-                setToken(res)
+                setToken(res.mobile)
                 console.log("登录成功， 成功写入cookie = " + getToken())
                 // 返回正确的处理
                 this.$router.push({ path: this.redirect || '/', query: this.otherQuery })

@@ -17,5 +17,5 @@ export default {
 
 
 export function login(data) {
-  return httpPost('/login/web', data, res => {return res})
+  return httpPost('/user/login', data, res => {return res})
 }
